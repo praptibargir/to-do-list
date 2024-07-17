@@ -22,16 +22,24 @@ function Home() {
     //     "Watch webseries"   
     // ]
 
-    const [todoList,setTodoList]=useState([])
+    const [todoList,setTodoList]=useState([
+        {task:"Learn React", category: "learning"},
+        {task:"Buy Groceries", category: "shopping"}
+    ])
     
     const[newTask, setNewTask]=useState("")
+
+    const [category, setCategory] =useState("")
 
   return (
     <div>
         <h1 className="app-title">To-Do-List</h1>
         <div className="to-do-list-container">
             {
-                todoList.map((todoitem, i)=><ToDoCard key={i} todoitem={todoitem}/>)
+                todoList.map((todoitem, i)=>{
+                    const {task, category}=todoitem
+                return <ToDoCard key={i} task={task} category={category}
+                />})
             }
             {
                 todoList.length===0
@@ -52,6 +60,20 @@ function Home() {
             value={newTask}
             onChange={(e)=>setNewTask(e.target.value)}/>
 
+            <select 
+            className="category-select" 
+            value={category}
+            onChange={(e)=>setCategory(e.target.value)}
+            >
+                <option value="">Select a category</option>
+                <option value="Learning">Learning</option>
+                <option value="Work">Work</option>
+                <option value="Personal">Personal</option>
+                <option value="Shopping">Shopping</option>
+                <option value="Health">Health</option>
+                <option value="Others">Others</option>
+            </select>
+
             <img 
             src={addIcon} 
             alt="add" 
@@ -61,8 +83,13 @@ function Home() {
                     toast.error("Task cannot be empty!")
                     return
                 }
-                setTodoList([...todoList,newTask])
+                if(category===""){
+                    toast.error("Please select a category!")
+                    return
+                }
+                setTodoList([...todoList,{task: newTask, category: category}])
                 setNewTask("")
+                setCategory("")
                 toast.success("Task added successfully!")
             }}/>
         </div>
