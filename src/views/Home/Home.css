@@ -1,0 +1,30 @@
+.app-title{
+    text-align: center;
+}
+
+.to-do-list-container{
+    background-color: white;
+    height: 400px;
+    width: 400px;
+    margin: 5px auto;
+    border-radius: 10px;
+    padding: 5px;
+}
+
+.add-input{
+    padding: 5px 10px;
+    border-radius: 10px;
+    border: 1px solid gray;
+    font-size: 20px;
+    margin-right: 20px;
+}
+
+.add-icon{
+    height: 40px;
+}
+
+.add-todo-item-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
