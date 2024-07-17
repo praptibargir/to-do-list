@@ -9,6 +9,7 @@
     margin: 5px auto;
     border-radius: 10px;
     padding: 5px;
+    overflow-y:scroll;
 }
 
 .add-input{
@@ -21,9 +22,18 @@
 
 .add-icon{
     height: 40px;
+    cursor: pointer;
+    border-radius: 50%;
+}
+
+.add-icon:hover{
+    transform: rotate(90deg);
+    transition: 1s;
+    box-shadow: 0 0 5px 5px #a3a3a3;
 }
 
 .add-todo-item-container{
+    margin-top: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
