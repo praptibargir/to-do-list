@@ -1,8 +1,9 @@
 import "./Home.css"
 import addIcon from "./add.png"
 import ToDoCard from "../../components/ToDoCard/ToDoCard"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import toast,{Toaster} from "react-hot-toast"
+import Swal from 'sweetalert2'
 
 function Home() {
 
@@ -22,14 +23,48 @@ function Home() {
     //     "Watch webseries"   
     // ]
 
-    const [todoList,setTodoList]=useState([
-        {task:"Learn React", category: "learning"},
-        {task:"Buy Groceries", category: "shopping"}
-    ])
+    const [todoList,setTodoList]=useState([])
     
     const[newTask, setNewTask]=useState("")
 
     const [category, setCategory] =useState("")
+
+    useEffect(()=>{
+        const savedToDolist=localStorage.getItem("todoList")
+
+        if(savedToDolist){
+            setTodoList(JSON.parse(savedToDolist))
+        }
+    },[])
+
+    useEffect(()=>{
+        if(todoList.length===0){
+            return
+        }
+        localStorage.setItem("todoList",JSON.stringify(todoList))
+    },[todoList])
+
+    function deleteItem(index) {
+        Swal.fire({
+          title: "Are you sure ?",
+          text: "You want to delete this task!",
+          icon: "warning",
+          showCancelButton: true,
+        }).then((result) => {
+          if (!result.isConfirmed) {
+            return
+          }
+          const newToDoList = todoList.filter((item, i) => {
+            if (i !== index) {
+              return true
+            }
+            else {
+              return false
+            }
+          })
+          setTodoList(newToDoList)
+        })
+      }
 
   return (
     <div>
@@ -38,8 +73,8 @@ function Home() {
             {
                 todoList.map((todoitem, i)=>{
                     const {task, category}=todoitem
-                return <ToDoCard key={i} task={task} category={category}
-                />})
+                    return <ToDoCard key={i} index={i} task={task} category={category} 
+                    deleteItem={deleteItem} />})
             }
             {
                 todoList.length===0
