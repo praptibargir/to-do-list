@@ -27,6 +27,7 @@ function ToDoCard({index, task, category, deleteItem}) {
         <img 
         src={deleteImg} 
         className='delete-icon'
+        alt='deleteicon'
         onClick={()=>{
             deleteItem(index)
         }}/>
